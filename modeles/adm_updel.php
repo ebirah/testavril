@@ -1,11 +1,11 @@
 <?php
 //var_dump($_SESSION);
 // si on peut rien faire
-if (!($_SESSION['modifietous'] || $_SESSION['modifie'] || $_SESSION['supprimetous'] || $_SESSION['supprime'])) {
+if (!($_SESSION['modifie_tous'] || $_SESSION['modifie'] || $_SESSION['sup_tous'] || $_SESSION['sup'])) {
     header("Location: ./");
 
 // si on peut modifier ou supprimer les articles de tout le monde
-} elseif ($_SESSION['modifietous'] || $_SESSION['supprimetous']) {
+} elseif ($_SESSION['modifie_tous'] || $_SESSION['sup_tous']) {
     $where = "";
 // si on peut modifier ou supprimer ses articles
 } else {
@@ -15,22 +15,10 @@ if (!($_SESSION['modifietous'] || $_SESSION['modifie'] || $_SESSION['supprimetou
 }
 
 
-$sql = "SELECT a.id, a.titre,
-              (SELECT GROUP_CONCAT(uu.lelogin SEPARATOR '|||') AS login
-                FROM utilisateur uu 
-                INNER JOIN article_has_utilisateur hh
-                ON uu.id = hh.utilisateur_id
-                WHERE a.id = hh.article_id       
-        ) AS login  ,
-        SUBSTRING(a.texte,1 ,300)AS letexte, a.ladate
-       FROM article a
-       INNER JOIN article_has_utilisateur h
-       ON a.id = h.article_id
-       INNER JOIN utilisateur u
-        ON u.id = h.utilisateur_id
-        $where
-        GROUP BY a.id
-        ORDER BY a.id DESC
+$sql = "SELECT a.*, u.lelogin FROM article a
+        INNER JOIN util u
+        ON a.util_id = u.id
+        
        ";
 $req_article = mysqli_query($mysqli, $sql) or die(mysqli_error($mysqli));
 

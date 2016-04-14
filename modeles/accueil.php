@@ -1,5 +1,5 @@
 <?php
-$sql = "SELECT a.id, a.letitre,r.id,r.lintitule,u.lelogin AS lelogin, SUBSTRING(a.ladesc,1 ,200)AS ladesc, a.ladate
+$sql = "SELECT a.id AS idarticle, a.letitre,r.id AS idrubrique,r.lintitule,u.lelogin AS lelogin, SUBSTRING(a.ladesc,1 ,200)AS ladesc, a.ladate
        FROM article a
        INNER JOIN article_has_rubrique h
        ON a.id = h.article_id

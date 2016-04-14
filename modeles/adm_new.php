@@ -9,7 +9,7 @@ if($_SESSION['ecrit']==false){
 
 if(empty($_POST)) {
     // on sélectionne tous les utilisateurs qui peuvent écrire un article
-    $sql = "SELECT id, lelogin FROM utilisateur WHERE ecrit=1;";
+    $sql = "SELECT id, lelogin FROM util WHERE ecrit=1;";
 
     $recup_util = mysqli_query($mysqli,$sql)or die(mysqli_error($mysqli));
 
@@ -21,10 +21,10 @@ if(empty($_POST)) {
 
 
     $letitre = htmlspecialchars(strip_tags(trim($_POST['letitre'])),ENT_QUOTES);
-    $letexte = htmlspecialchars(strip_tags(trim($_POST['letexte'])),ENT_QUOTES);
+    $letexte = htmlspecialchars(strip_tags(trim($_POST['ladesc'])),ENT_QUOTES);
     $date = $_POST['ladate'];
 
-    $sql = "INSERT INTO article (titre,texte,ladate)
+    $sql = "INSERT INTO article (letitre,ladesc,ladate)
             VALUES ('$letitre','$letexte','$date')";
     // exécution de la requête
     mysqli_query($mysqli,$sql)or die(mysqli_error($mysqli));
@@ -33,7 +33,7 @@ if(empty($_POST)) {
     $idarticle = mysqli_insert_id($mysqli);
 
     $sql = "INSERT INTO article_has_utilisateur (article_id, utilisateur_id) VALUES ";
-    foreach($_POST['auteur'] as $auteur){
+    foreach($_POST['util'] as $auteur){
         $sql .= "($idarticle,$auteur),";
     }
     $sql = substr($sql, 0, -1);

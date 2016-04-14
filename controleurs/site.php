@@ -11,7 +11,14 @@ if (empty($_GET)) {
     require_once "vues/detail.php";
 
 // si on veut se connecter
-} elseif (isset($_GET['connect'])){
+} elseif (isset($_GET['connect'])) {
     require_once "modeles/connect.php";
     require_once "vues/connect.php";
+
+
+// si on veut lire un article en entier
+} elseif (isset($_GET['idrubrique']) && ctype_digit($_GET['idrubrique'])) {
+    $idrubrique = (int)$_GET['idrubrique'];
+    require_once "modeles/rubrique.php";
+    require_once "vues/rubrique.php";
 }

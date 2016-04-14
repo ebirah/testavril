@@ -12,7 +12,7 @@ if(isset($erreur)){
   echo $erreur;
 }else {
 
-  $login = explode("|||",$tab_article['login']);
+  $login = explode("|||",$tab_article['lelogin']);
   $affiche="";
   foreach ($login as $log){
 
@@ -20,10 +20,10 @@ if(isset($erreur)){
 
   }
 
-  echo "<h2>".$tab_article['titre'] . " par ";
+  echo "<h2>".$tab_article['letitre'] . " par ";
   echo substr($affiche, 0, -2)."</h2>";
   echo "Le ".$tab_article['ladate'] . "</br>";
-  echo $tab_article['texte']."<hr>";
+  echo nl2br($tab_article['ladesc'])."<hr>";
 
 
 
